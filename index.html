@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f6ee">
+<meta name="description" content="四捨五入、切り上げ、切り捨て、上から何けたの概数を冒険しながら学ぶ算数教材。">
+<title>がい数クエスト｜TT-sensei</title>
+<link rel="preconnect" href="https://tt-sensei.github.io">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-effects.css">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-learning.css">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-feedback.css">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-effects-library.css">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-effects-learning-motion.css">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-effects-kinetic.css">
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-effects-learning-shell.css">
+<link rel="stylesheet" href="./css/theme.css">
+<link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+<header class="site-header edu-shell-header">
+<a class="site-brand edu-shell-brand" href="./" aria-label="がい数クエスト ホーム">
+<span class="site-brand-mark edu-shell-brand-mark" aria-hidden="true">約</span>
+<span><strong>がい数クエスト</strong><small>NUMBER ADVENTURE</small></span>
+</a>
+<div class="header-actions">
+<span class="coin-counter" aria-label="獲得コイン"><span aria-hidden="true">🪙</span><strong id="header-coins">0</strong></span>
+<button class="header-control" type="button" data-action="sound-toggle" id="sound-toggle" aria-pressed="true">音 ON</button>
+<button class="header-control" type="button" data-action="open-badges">バッジ</button>
+<button class="header-control" type="button" data-action="open-stats">記録</button>
+<button class="header-home" type="button" data-action="go-home" aria-label="ホームへ">⌂</button>
+</div>
+</header>
+<main id="app" class="app-main edu-app edu-container">
+<section id="screen-home" class="app-screen" data-screen><div id="home-content"></div></section>
+<section id="screen-map" class="app-screen" data-screen hidden><div id="map-content"></div></section>
+<section id="screen-quiz" class="app-screen" data-screen hidden><div id="quiz-content"></div></section>
+<section id="screen-result" class="app-screen" data-screen hidden><div id="result-content"></div></section>
+<section id="screen-market" class="app-screen" data-screen hidden><div id="market-content"></div></section>
+<section id="screen-market-done" class="app-screen" data-screen hidden><div id="market-done-content"></div></section>
+<section id="screen-badges" class="app-screen" data-screen hidden><div id="badges-content"></div></section>
+<section id="screen-stats" class="app-screen" data-screen hidden><div id="stats-content"></div></section>
+</main>
+<footer class="site-footer"><span>TT-sensei learning tools</span><span>考える → たしかめる → できる</span></footer>
+<div id="app-toast" class="app-toast" role="status" aria-live="polite" hidden></div>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

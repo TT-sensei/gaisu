@@ -1,0 +1,23 @@
+const CLEAR_BADGE_IMAGE="https://tt-sensei.github.io/edu-assets/assets/web/badges/common/clear/badge.webp";
+export const BADGES=[
+{id:"first-step",name:"はじめの一歩",icon:"🌱",description:"はじめて問題に正解した。"},
+{id:"ten-answers",name:"十問の旅人",icon:"🧭",description:"問題に10回取り組んだ。"},
+{id:"combo-three",name:"三連続のひらめき",icon:"✨",description:"3問連続で正解した。"},
+{id:"combo-five",name:"五連続の達人",icon:"🌟",description:"5問連続で正解した。"},
+{id:"forest-clear",name:"森の四捨五入名人",icon:"🌳",description:"はじまりの森をクリアした。"},
+{id:"grassland-clear",name:"草原の見積もり名人",icon:"🍃",description:"草原の道をクリアした。"},
+{id:"riverbank-clear",name:"水辺の桁読み名人",icon:"💧",description:"水辺の数字道をクリアした。"},
+{id:"ruins-clear",name:"遺跡の使い分け名人",icon:"🏛️",description:"古代遺跡をクリアした。"},
+{id:"journey-clear",name:"大冒険の達成",icon:"🏆",description:"4つのエリアをすべてクリアした。",image:CLEAR_BADGE_IMAGE},
+{id:"mistake-fixed",name:"おさらい名人",icon:"🔎",description:"まちがえた問題に、もう一度正解した。"},
+{id:"weak-master",name:"苦手克服",icon:"🪄",description:"5問のまちがいを正解に変えた。"},
+{id:"hundred-answers",name:"百問への道",icon:"💯",description:"問題に100回取り組んだ。"},
+{id:"accuracy-star",name:"正確さの星",icon:"⭐",description:"1回の練習で80%以上正解した。"},
+{id:"perfect-ten",name:"パーフェクト",icon:"🎖️",description:"10問すべて正解した。"},
+{id:"coin-hunter",name:"コインハンター",icon:"🪙",description:"冒険で100コイン集めた。"},
+{id:"training-clear",name:"特訓の成果",icon:"🎯",description:"特訓の広場で4問以上正解した。"},
+{id:"inn-master",name:"旅人の宿の達人",icon:"⛺",description:"混合練習で80%以上正解した。"},
+{id:"volcano-clear",name:"火山の試練突破",icon:"🌋",description:"火山の試練を5問すべて正解した。"},
+{id:"market-estimate",name:"市場の見積もり名人",icon:"🧺",description:"市場の3つの買い物ミッションを終えた。"},
+{id:"market-master",name:"予算管理の達人",icon:"💎",description:"市場の9問すべてに正解した。"}
+];

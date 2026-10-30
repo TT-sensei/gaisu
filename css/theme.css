@@ -1,0 +1,9 @@
+:root {
+--edu-ink:#20342d;--edu-muted:#66766e;--edu-line:#dce5dc;--edu-bg:#f4f6ee;--edu-surface:#fff;
+--edu-primary:#28634e;--edu-primary-dark:#1d503e;--edu-primary-soft:#e9f4ec;--edu-accent:#c28b37;
+--edu-accent-soft:#fbf3df;--edu-success:#28734e;--edu-success-soft:#e9f5ed;--edu-warning:#9b681d;
+--edu-warning-soft:#fff5df;--edu-danger:#a94b43;--edu-danger-soft:#fbefeb;--edu-radius-sm:11px;
+--edu-radius-md:17px;--edu-radius-lg:24px;--edu-shadow-sm:0 3px 12px rgb(32 52 45 / 7%);
+--edu-shadow-md:0 14px 34px rgb(32 52 45 / 12%);--edu-focus:0 0 0 4px rgb(48 119 88 / 20%);
+--edu-max-width:1180px;color-scheme:light
+}

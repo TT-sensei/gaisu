@@ -1,0 +1,1 @@
+{"name":"gaisu-quest","version":"1.0.0","private":true,"type":"module","scripts":{"verify":"node scripts/verify.mjs"},"description":"Static elementary mathematics learning app for rounding and approximation."}
