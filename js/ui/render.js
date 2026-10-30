@@ -151,7 +151,7 @@ const summary=engine.getMarketSummary();
 element.innerHTML='<section class="result-hero" style="'+sceneStyle("sky-island")+'"><div class="result-main"><div><p class="eyebrow">FINAL MARKET RESULT</p><h1>市場ミッション達成！</h1><p>概数を使って見積もり、最後に実際の金額も確かめられたね。</p></div><img class="result-art" src="'+GROUP_IMAGES.celebration+'" alt="" loading="lazy"></div></section>'+
 '<div class="result-stats"><div class="result-stat"><span>正解</span><strong>'+summary.correct+' / '+summary.total+'</strong></div>'+
 '<div class="result-stat"><span>得点</span><strong>'+summary.score+'</strong></div><div class="result-stat"><span>買い物ミッション</span><strong>3 / 3</strong></div>'+
-'<div class="result-stat"><span>獲得バッジ</span><strong>'+(summary.correct===9?"2":"1")+'</strong></div></div>'+
+'<div class="result-stat"><span>獲得バッジ</span><strong>'+summary.badgesEarned+'</strong></div></div>'+
 '<section class="info-card"><h2>旅のまとめ</h2><p>概数は、目的に合わせて使い方を選ぶことが大切。およその金額で判断したあと、必要に応じて正確な合計も確かめよう。</p>'+
 '<div class="result-actions"><button class="primary-action" data-action="open-badges">バッジを見る</button><button class="secondary-action" data-action="open-map">地図へ</button><button class="secondary-action" data-action="go-home">ホーム</button></div></section>';
 }
