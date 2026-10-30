@@ -1,7 +1,10 @@
 import {roundNearest,roundUp,roundDown,roundSignificant,significantUnit,formatNumber} from "../js/core/rounding.js";
 function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function numberChoices(number,unit,answer){
-const values=[answer,roundDown(number,unit),roundUp(number,unit),roundNearest(number,unit),answer-unit,answer+unit,answer-unit*2,answer+unit*2,answer+unit*3,answer-unit*3];
+const finerUnit=Math.max(1,unit/10);
+const roundedFiner=roundNearest(number,finerUnit);
+const nextFiner=roundedFiner+(number>=roundedFiner?finerUnit:-finerUnit);
+const values=[answer,roundDown(number,unit),roundedFiner,nextFiner,roundUp(number,unit),answer-unit,answer+unit];
 const wrong=[...new Set(values.filter(v=>Number.isFinite(v)&&v>=0&&v!==answer))];
 return shuffle([answer,...wrong.slice(0,3)]).map(value=>({value,label:formatNumber(value)}));
 }
@@ -52,7 +55,7 @@ nearest:"四捨五入は、およその大きさを表したいときに使い�
 up:"切り上げは、足りなくならないように多めに見積もりたいときに役立ちます。",
 down:"切り捨ては、実際より多くならないように見積もりたいときに使えます。",
 oneSig:"上から1けたは、大きな数の規模を大まかに比べたいときに便利です。",
-twoSig:"上から2けたは、上から1けたよりも少し詳しく比べたいときに便利です."
+twoSig:"上から2けたは、上から1けたよりも少し詳しく比べたいときに便利です。"
 };
 function createMethodQuestion(data){
 const correct=METHOD_CHOICES.find(x=>x.value===data[2]),options=shuffle(METHOD_CHOICES).slice(0,4);
