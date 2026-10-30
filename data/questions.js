@@ -5,20 +5,21 @@ const values=[answer,roundDown(number,unit),roundUp(number,unit),roundNearest(nu
 const wrong=[...new Set(values.filter(v=>Number.isFinite(v)&&v>=0&&v!==answer))];
 return shuffle([answer,...wrong.slice(0,3)]).map(value=>({value,label:formatNumber(value)}));
 }
+function placeLabel(unit){return ({10:"十の位",100:"百の位",1000:"千の位",10000:"一万の位",100000:"十万の位"})[unit]||(formatNumber(unit)+"の位");}
 function createNumericQuestion(data){
 const unit=data.digits?significantUnit(data.number,data.digits):data.unit;
 let answer;if(data.rule==="nearest")answer=roundNearest(data.number,unit);else if(data.rule==="up")answer=roundUp(data.number,unit);else if(data.rule==="down")answer=roundDown(data.number,unit);else answer=roundSignificant(data.number,data.digits||1);
 let instruction="",hint="",explanation="";
 if(data.rule==="nearest"){
-instruction=formatNumber(unit)+"の位まで四捨五入";
+instruction=placeLabel(unit)+"まで四捨五入";
 hint="残す位のすぐ右の数字を見よう。0〜4ならそのまま、5〜9なら1大きくするよ。";
 explanation="四捨五入では、残す位のすぐ右の数字を見ます。0〜4は切り捨て、5〜9は切り上げます。";
 }else if(data.rule==="up"){
-instruction=formatNumber(unit)+"の位まで切り上げ";
+instruction=placeLabel(unit)+"まで切り上げ";
 hint="残す位より右に0でない数字があれば、残す位を1大きくするよ。";
 explanation="切り上げは、残す位より右にある数をまとめて、残す位を1大きくします。";
 }else if(data.rule==="down"){
-instruction=formatNumber(unit)+"の位まで切り捨て";
+instruction=placeLabel(unit)+"まで切り捨て";
 hint="残す位より右の数字を、まとめて0にしてみよう。";
 explanation="切り捨ては、残す位より右の数字をすべて0にします。";
 }else{
