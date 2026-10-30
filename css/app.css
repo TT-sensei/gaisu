@@ -71,7 +71,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #d49c43;outline-offset:3p
 .badges-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 .badge-card{min-height:158px;padding:13px 10px;border:1px solid #dce5d9;border-radius:17px;background:#fff;text-align:center;box-shadow:var(--edu-shadow-sm)}
 .badge-medal{display:grid;width:60px;height:60px;place-items:center;margin:0 auto 9px;border:4px solid #d8c28a;border-radius:50%;color:#6f5425;background:radial-gradient(circle at 32% 28%,#fff9d9,#e6ca7c 70%,#c4a45e);box-shadow:inset 0 0 0 2px rgb(255 255 255 / 72%),0 3px 0 #b3a06b;font-size:1.6rem}
-.badge-card.is-locked{background:#f8f9f6;opacity:.62}.badge-card.is-locked .badge-medal{border-color:#d9ded6;color:#89948a;background:#e7ebe5;box-shadow:inset 0 0 0 2px #f8faf7}
+.badge-card.is-locked{background:#f8f9f6;opacity:.62}.badge-card.is-locked .badge-medal{border-color:#d9ded6;color:#89948a;background:#e7ebe5;box-shadow:inset 0 0 0 2px #f8faf7}.badge-card.is-locked .badge-medal img{filter:grayscale(1);opacity:.48}
 .badge-card img{width:45px;height:45px;object-fit:contain}.badge-card strong{display:block;margin:0 0 4px;font-size:.86rem}.badge-card small{display:block;color:var(--edu-muted);font-size:.72rem;line-height:1.4}
 .stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.stats-panel{padding:16px;border:1px solid var(--edu-line);border-radius:17px;background:#fff}
 .stats-panel h2{margin:0 0 10px;font-size:1rem}.topic-row{display:grid;grid-template-columns:110px 1fr 48px;gap:9px;align-items:center;margin:10px 0;font-size:.82rem}
