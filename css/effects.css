@@ -18,7 +18,6 @@
 .quiz-scene .aside-stat,
 .quiz-scene .tip-card{
   background:rgb(255 255 255 / 94%);
-  backdrop-filter:blur(2px);
 }
 .quest-scene-enter{animation:quest-scene-enter .55s ease both}
 @keyframes quest-scene-enter{
@@ -91,6 +90,17 @@
 @keyframes quest-correct-arrive{
   from{opacity:.75;transform:translateY(5px) scale(.99)}
   to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.feedback-box .edu-reward-icon{
+  display:inline-block;
+  transform-origin:50% 85%;
+  animation:quest-reward-bounce .72s cubic-bezier(.2,.8,.25,1) both;
+}
+@keyframes quest-reward-bounce{
+  0%{opacity:.5;transform:translateY(7px) rotate(-8deg) scale(.82)}
+  55%{opacity:1;transform:translateY(-3px) rotate(5deg) scale(1.12)}
+  100%{transform:translateY(0) rotate(0) scale(1)}
 }
 
 .quest-result-clear{position:relative}
@@ -198,7 +208,7 @@
 }
 @media(prefers-reduced-motion:reduce){
   .quest-scene-enter,.quest-area-intro,.quest-area-intro.is-leaving,
-  .quest-combo-burst,.quest-combo-hit,.feedback-box.is-correct,
+  .quest-combo-burst,.quest-combo-hit,.feedback-box.is-correct,.feedback-box .edu-reward-icon,
   .quest-result-clear::after,.quest-result-clear .result-art,
   .route-card.is-just-cleared,.route-card.is-newly-unlocked,
   .quest-badge-reward.is-visible{animation:none!important}
