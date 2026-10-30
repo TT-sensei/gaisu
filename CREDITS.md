@@ -29,3 +29,14 @@ Source: [TT-sensei/edu-assets](https://github.com/TT-sensei/edu-assets)
 - [TT-sensei/sounds-recipe-](https://github.com/TT-sensei/sounds-recipe-): generated sound effects and the playSound / getSound public API. PolyForm Noncommercial License 1.0.0.
 
 The respective source repositories contain the complete license texts and notices. The terms of those repositories apply independently to the shared code and media used by this app.
+
+## バッジ・コレクション画像
+
+Source: [TT-sensei/edu-assets](https://github.com/TT-sensei/edu-assets)
+
+- Math badges: assets/web/badges/math/ (11 learning-themed badge images)
+- Clear badge: assets/web/badges/common/clear/badge.webp
+- Collection artwork: assets/web/collections/gem/, assets/web/collections/treasure/, assets/web/collections/fantasy/ (8 images)
+- Images are loaded from the original repository without modification.
+- License: [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+- Copyright © 2026 TT-sensei.
