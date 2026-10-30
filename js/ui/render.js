@@ -34,7 +34,7 @@ export function renderMap(element,engine){
 const lastSummary=engine.session?.summary;
 const justClearedId=lastSummary?.mode==="quest"&&lastSummary.firstClear?lastSummary.areaId:null;
 const clearedIndex=MAIN_AREAS.findIndex(area=>area.id===justClearedId);
-const justUnlockedId=clearedIndex>=0?MAIN_AREAS[clearedIndex+1]?.id:null;
+const justUnlockedId=clearedIndex>=0?(MAIN_AREAS[clearedIndex+1]?.id||(clearedIndex===MAIN_AREAS.length-1?MARKET_AREA.id:null)):null;
 const cards=AREAS.map(area=>{
 const status=engine.getAreaStatus(area.id),market=area.id==="market",disabled=!status.unlocked;
 const label=status.completed?"クリア！":disabled?"まだ進めない":market?"最終ミッション":"挑戦できる";
