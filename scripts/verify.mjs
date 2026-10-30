@@ -14,7 +14,7 @@ assert.equal(roundSignificant(4752,2),4800);
 const ids=new Set();
 for(const area of MAIN_AREAS){
 const bank=QUESTION_BANKS[area.id];
-assert.ok(Array.isArray(bank)&&bank.length>=10,area.id+" needs at least 10 questions");
+assert.ok(Array.isArray(bank)&&bank.length>=20,area.id+" needs at least 10 questions");
 for(const question of bank){
 assert.ok(!ids.has(question.id),"duplicate question id: "+question.id);ids.add(question.id);
 assert.equal(question.choices.length,4,question.id+" must have four choices");
@@ -22,7 +22,7 @@ assert.ok(question.choices.some(choice=>String(choice.value)===String(question.a
 assert.equal(new Set(question.choices.map(choice=>String(choice.value))).size,4,question.id+" has duplicate choices");
 }
 }
-assert.equal(ALL_QUESTIONS.length,48);
+assert.equal(ALL_QUESTIONS.length,80);
 assert.equal(MARKET_AREA.id,"market");
 assert.equal(BADGES.length,20);
 assert.equal(SHOPPING_MISSIONS.length,3);
