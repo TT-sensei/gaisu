@@ -8,7 +8,7 @@ export const BADGES=[
 {id:"grassland-clear",name:"草原の見積もり名人",icon:"🍃",description:"草原の道をクリアした。",image:ASSET_BASE+"badges/math/math-compare/badge.webp"},
 {id:"riverbank-clear",name:"水辺の桁読み名人",icon:"💧",description:"水辺の数字道をクリアした。",image:ASSET_BASE+"badges/math/generalization/badge.webp"},
 {id:"ruins-clear",name:"遺跡の使い分け名人",icon:"🏛️",description:"古代遺跡をクリアした。",image:ASSET_BASE+"badges/math/math-explainer/badge.webp"},
-{id:"journey-clear",name:"大冒険の達成",icon:"🏆",description:"4つのエリアをすべてクリアした。",image:ASSET_BASE+"badges/badges/common/clear/badge.webp"},
+{id:"journey-clear",name:"大冒険の達成",icon:"🏆",description:"4つのエリアをすべてクリアした。",image:ASSET_BASE+"badges/common/clear/badge.webp"},
 {id:"mistake-fixed",name:"おさらい名人",icon:"🔎",description:"まちがえた問題に、もう一度正解した。",image:ASSET_BASE+"badges/math/math-evidence/badge.webp"},
 {id:"weak-master",name:"苦手克服",icon:"🪄",description:"5問のまちがいを正解に変えた。",image:ASSET_BASE+"badges/math/fraction-sense/badge.webp"},
 {id:"hundred-answers",name:"百問への道",icon:"💯",description:"問題に100回取り組んだ。",image:ASSET_BASE+"badges/math/math-prediction/badge.webp"},
