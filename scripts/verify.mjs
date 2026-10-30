@@ -25,7 +25,7 @@ assert.equal(new Set(question.choices.map(choice=>String(choice.value))).size,4,
 assert.equal(ALL_QUESTIONS.length,80);
 assert.equal(MARKET_AREA.id,"market");
 assert.equal(BADGES.length,20);
-assert.equal(SHOPPING_MISSIONS.length,3);
+assert.equal(SHOPPING_MISSIONS.length,6);
 for(const mission of SHOPPING_MISSIONS){const totals=getMissionTotals(mission);assert.ok(totals.actualTotal>0);assert.ok(totals.estimatedTotal>0);assert.ok(mission.items.length>=3);}
 console.log("がい数クエスト data verification passed.");
 console.log("Areas:",MAIN_AREAS.length,"questions:",ALL_QUESTIONS.length,"badges:",BADGES.length,"market missions:",SHOPPING_MISSIONS.length);

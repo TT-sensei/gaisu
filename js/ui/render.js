@@ -108,7 +108,7 @@ element.innerHTML='<section class="result-hero" style="'+sceneStyle(summary.firs
 function renderMarketQuestion(mission,state){
 const totals=getMissionTotals(mission);
 if(state.phase===0){
-const choices=[["nearest","四捨五入"],["up","切り上げ"],["down","切り捨て"],["oneSig","上から1けた"]];
+const choices=[["nearest","四捨五入"],["up","切り上げ"],["down","切り捨て"],["oneSig","上から1けた"],["twoSig","上から2けた"]];
 return '<h2>この買い物の目的に合う方法は？</h2><p>'+esc(mission.purpose)+'</p><div class="market-choice-grid">'+
 choices.map(choice=>'<button class="answer-choice" data-action="market-answer" data-answer="'+choice[0]+'">'+choice[1]+'</button>').join("")+'</div>';
 }
@@ -145,13 +145,13 @@ const content=state.last?renderMarketFeedback(mission,state):renderMarketQuestio
 element.innerHTML='<div class="quiz-topline"><button class="quiet-action" data-action="open-map">← 地図へ</button><div class="quiz-meta"><span>大きな市場</span><span>買い物 '+(state.missionIndex+1)+' / '+SHOPPING_MISSIONS.length+'</span></div></div>'+
 '<section class="market-scene" style="'+sceneStyle("town")+'"><p class="eyebrow">MARKET MISSION</p><h1>'+esc(mission.title)+'</h1><p class="lead">'+esc(mission.purpose)+'</p>'+
 '<div class="market-items">'+items+'</div><div class="market-budget"><span>予算 '+formatYen(mission.budget)+'</span><span>ステップ '+(state.phase+1)+' / 3：'+phases[state.phase]+'</span></div>'+
-'<div class="market-question"><div class="progress-track"><span style="width:'+((state.missionIndex*3+state.phase+1)/9*100)+'%"></span></div>'+content+'</div></section>';
+'<div class="market-question"><div class="progress-track"><span style="width:'+((state.missionIndex*3+state.phase+1)/(SHOPPING_MISSIONS.length*3)*100)+'%"></span></div>'+content+'</div></section>';
 }
 export function renderMarketDone(element,engine){
 const summary=engine.getMarketSummary();
 element.innerHTML='<section class="result-hero" style="'+sceneStyle("sky-island")+'"><div class="result-main"><div><p class="eyebrow">FINAL MARKET RESULT</p><h1>市場ミッション達成！</h1><p>概数を使って見積もり、最後に実際の金額も確かめられたね。</p></div><img class="result-art" src="'+GROUP_IMAGES.celebration+'" alt="" loading="lazy"></div></section>'+
 '<div class="result-stats"><div class="result-stat"><span>正解</span><strong>'+summary.correct+' / '+summary.total+'</strong></div>'+
-'<div class="result-stat"><span>得点</span><strong>'+summary.score+'</strong></div><div class="result-stat"><span>買い物ミッション</span><strong>3 / 3</strong></div>'+
+'<div class="result-stat"><span>得点</span><strong>'+summary.score+'</strong></div><div class="result-stat"><span>買い物ミッション</span><strong>'+SHOPPING_MISSIONS.length+' / '+SHOPPING_MISSIONS.length+'</strong></div>'+
 '<div class="result-stat"><span>獲得バッジ</span><strong>'+summary.badgesEarned+'</strong></div></div>'+
 '<section class="info-card"><h2>旅のまとめ</h2><p>概数は、目的に合わせて使い方を選ぶことが大切。およその金額で判断したあと、必要に応じて正確な合計も確かめよう。</p>'+
 '<div class="result-actions"><button class="primary-action" data-action="open-badges">バッジを見る</button><button class="secondary-action" data-action="open-map">地図へ</button><button class="secondary-action" data-action="go-home">ホーム</button></div></section>';

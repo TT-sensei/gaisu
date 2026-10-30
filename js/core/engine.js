@@ -177,9 +177,10 @@ if(this.market.phase<2){this.market.phase++;this.market.last=null;return false;}
 this.market.missionIndex++;this.market.last=null;this.market.phase=0;this.market.currentMissionCorrect=0;
 if(this.market.missionIndex<SHOPPING_MISSIONS.length)return false;
 this.market.finished=true;this.profile.marketCompleted=true;this.saveProfile();this.progress.complete(MARKET_AREA.id);
-if(this.market.totalCorrect>=6)this.award("market-estimate");
-if(this.market.totalCorrect===9)this.award("market-master");
+const totalPhases=SHOPPING_MISSIONS.length*3;
+if(this.market.totalCorrect>=Math.ceil(totalPhases*2/3))this.award("market-estimate");
+if(this.market.totalCorrect===totalPhases)this.award("market-master");
 return true;
 }
-getMarketSummary(){if(!this.market)return null;return {correct:this.market.totalCorrect,total:this.market.totalAnswers,score:this.market.score.getResult().score,perfect:this.market.totalCorrect===9,badgesEarned:(this.market.totalCorrect>=6?1:0)+(this.market.totalCorrect===9?1:0)};}
+getMarketSummary(){if(!this.market)return null;const totalPhases=SHOPPING_MISSIONS.length*3;return {correct:this.market.totalCorrect,total:this.market.totalAnswers,score:this.market.score.getResult().score,perfect:this.market.totalCorrect===totalPhases,badgesEarned:(this.market.totalCorrect>=Math.ceil(totalPhases*2/3)?1:0)+(this.market.totalCorrect===totalPhases?1:0)};}
 }

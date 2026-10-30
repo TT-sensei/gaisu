@@ -18,6 +18,6 @@ export const BADGES=[
 {id:"training-clear",name:"特訓の成果",icon:"🎯",description:"特訓の広場で4問以上正解した。",image:ASSET_BASE+"collections/treasure/common/compass/badge.webp"},
 {id:"inn-master",name:"旅人の宿の達人",icon:"⛺",description:"混合練習で80%以上正解した。",image:ASSET_BASE+"collections/fantasy/common/slime/badge.webp"},
 {id:"volcano-clear",name:"火山の試練突破",icon:"🌋",description:"火山の試練を5問すべて正解した。",image:ASSET_BASE+"collections/fantasy/common/dragon/badge.webp"},
-{id:"market-estimate",name:"市場の見積もり名人",icon:"🧺",description:"市場の3つの買い物ミッションを終えた。",image:ASSET_BASE+"collections/fantasy/common/phoenix/badge.webp"},
-{id:"market-master",name:"予算管理の達人",icon:"💎",description:"市場の9問すべてに正解した。",image:ASSET_BASE+"collections/gem/common/emerald/badge.webp"}
+{id:"market-estimate",name:"市場の見積もり名人",icon:"🧺",description:"市場の買い物ミッションをすべて終えた。",image:ASSET_BASE+"collections/fantasy/common/phoenix/badge.webp"},
+{id:"market-master",name:"予算管理の達人",icon:"💎",description:"市場の買い物の全問に正解した。",image:ASSET_BASE+"collections/gem/common/emerald/badge.webp"}
 ];
