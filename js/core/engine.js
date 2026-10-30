@@ -181,5 +181,5 @@ if(this.market.totalCorrect>=6)this.award("market-estimate");
 if(this.market.totalCorrect===9)this.award("market-master");
 return true;
 }
-getMarketSummary(){if(!this.market)return null;return {correct:this.market.totalCorrect,total:this.market.totalAnswers,score:this.market.score.getResult().score,perfect:this.market.totalCorrect===9};}
+getMarketSummary(){if(!this.market)return null;return {correct:this.market.totalCorrect,total:this.market.totalAnswers,score:this.market.score.getResult().score,perfect:this.market.totalCorrect===9,badgesEarned:(this.market.totalCorrect>=6?1:0)+(this.market.totalCorrect===9?1:0)};}
 }
