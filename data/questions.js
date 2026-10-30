@@ -2,10 +2,18 @@ import {roundNearest,roundUp,roundDown,roundSignificant,significantUnit,formatNu
 function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function numberChoices(number,unit,answer){
 const finerUnit=Math.max(1,unit/10);
-const roundedFiner=roundNearest(number,finerUnit);
-const nextFiner=roundedFiner+(number>=roundedFiner?finerUnit:-finerUnit);
-const values=[answer,roundDown(number,unit),roundedFiner,nextFiner,roundUp(number,unit),answer-unit,answer+unit];
-const wrong=[...new Set(values.filter(v=>Number.isFinite(v)&&v>=0&&v!==answer))];
+const finerFloor=roundDown(number,finerUnit);
+const finerCeil=roundUp(number,finerUnit);
+const finerNearest=roundNearest(number,finerUnit);
+const candidates=[finerFloor,finerCeil,finerNearest,roundDown(number,unit),roundUp(number,unit),answer-unit,answer+unit,answer-unit*2,answer+unit*2];
+const wrong=[...new Set(candidates.filter(v=>Number.isFinite(v)&&v>=0&&v!==answer))];
+let step=finerUnit;
+for(let distance=1;wrong.length<3&&distance<=20;distance++){
+for(const value of [answer-step*distance,answer+step*distance]){
+if(value>=0&&value!==answer&&!wrong.includes(value))wrong.push(value);
+if(wrong.length>=3)break;
+}
+}
 return shuffle([answer,...wrong.slice(0,3)]).map(value=>({value,label:formatNumber(value)}));
 }
 function placeLabel(unit){return ({10:"十の位",100:"百の位",1000:"千の位",10000:"一万の位",100000:"十万の位"})[unit]||(formatNumber(unit)+"の位");}
