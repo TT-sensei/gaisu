@@ -158,7 +158,7 @@ element.innerHTML='<section class="result-hero" style="'+sceneStyle("sky-island"
 export function renderBadges(element,engine){
 const badges=engine.getBadgeData(),earned=badges.filter(badge=>badge.earned).length;
 const cards=badges.map(badge=>{
-const image=badge.earned&&badge.image?'<img src="'+esc(badge.image||CLEAR_BADGE_IMAGE)+'" alt="" loading="lazy">':esc(badge.earned?badge.icon:"？");
+const image=badge.image?'<img src="'+esc(badge.image)+'" alt="" loading="lazy">':esc(badge.earned?badge.icon:"？");
 return '<article class="badge-card '+(badge.earned?"is-earned":"is-locked")+'"><div class="badge-medal">'+image+'</div>'+
 '<strong>'+esc(badge.earned?badge.name:"？？？")+'</strong><small>'+esc(badge.earned?badge.description:"学習を続けると手に入るよ。")+'</small></article>';
 }).join("");
