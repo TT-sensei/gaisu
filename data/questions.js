@@ -39,7 +39,7 @@ instruction="上から"+data.digits+"けたの概数";
 hint="左から"+data.digits+"けたを残して、そのすぐ右の数字を見よう。";
 explanation=(unit===1||rest===0)?"上から"+data.digits+"けたを残すと、"+answerText+" になるよ。":"上から"+data.digits+"けたを残すよ。残す位（"+placeLabel(unit)+"）のすぐ右の数字は "+decidingDigit+"。"+(decidingDigit>=5?"5以上だから切り上げて、":"4以下だから切り捨てて、")+answerText+" になるよ。";
 }
-return {id:data.id,areaId:data.areaId,type:"number",topic:data.topic,prompt:data.prompt||(formatNumber(data.number)+"を、"+instruction+"で表しましょう。"),number:data.number,unit,answer,choices:numberChoices(data.number,unit,answer),hint,explanation,answerLabel:formatNumber(answer)};
+return {id:data.id,areaId:data.areaId,type:"number",topic:data.topic,rule:data.rule,digits:data.digits||null,prompt:data.prompt||(formatNumber(data.number)+"を、"+instruction+"で表しましょう。"),number:data.number,unit,answer,choices:numberChoices(data.number,unit,answer),hint,explanation,answerLabel:formatNumber(answer)};
 }
 const forestData=[[3746,10],[5243,10],[2849,100],[6850,100],[8349,100],[4550,100],[19480,1000],[36700,1000],[52499,1000],[74500,1000],[8264,100],[98349,1000],[1564,10],[2395,10],[7651,100],[7649,100],[23549,1000],[23550,1000],[90549,1000],[9950,100]];
 const grasslandData=[[12431,100,"up"],[12431,100,"down"],[8760,1000,"up"],[8760,1000,"down"],[5201,10,"up"],[5201,10,"down"],[27101,100,"up"],[27101,100,"down"],[9999,1000,"up"],[9999,1000,"down"],[34501,1000,"up"],[34501,1000,"down"],[6381,100,"up"],[6381,100,"down"],[15001,1000,"up"],[15001,1000,"down"],[7291,10,"up"],[7291,10,"down"],[99901,1000,"up"],[99901,1000,"down"]];
@@ -86,3 +86,41 @@ riverbank:riverData.map((v,i)=>createNumericQuestion({id:"riverbank-"+String(i+1
 ruins:methodData.map(createMethodQuestion)
 };
 export const ALL_QUESTIONS=Object.values(QUESTION_BANKS).flat();
+export function diagnoseNumericChoice(question,value){
+const n=question.number,u=question.unit,a=question.answer,v=Number(value);
+if(!Number.isFinite(v)||v===a)return null;
+const place=placeLabel(u),valueText=formatNumber(v);
+if(v===n)return "えらんだ数は、もとの数のままだよ。"+place+"まで丸めてみよう。";
+if(u>1){
+const finerUnit=u/10,finerValues=[roundNearest(n,finerUnit),roundDown(n,finerUnit),roundUp(n,finerUnit)];
+if(question.digits){
+if(finerValues.includes(v))return valueText+"は、上から"+(question.digits+1)+"けたまで残したときの答えだよ。この問題では、上から"+question.digits+"けたまで残そう。";
+if(question.digits>=2&&v===roundNearest(n,u*10))return valueText+"は、上から"+(question.digits-1)+"けたまで残したときの答えだよ。この問題では、上から"+question.digits+"けたまで残そう。";
+}else if(finerValues.includes(v)){
+return valueText+"は、"+placeLabel(finerUnit)+"まで丸めたときの答えだよ。この問題では"+place+"まで丸めよう。";
+}
+}
+const down=roundDown(n,u),up=roundUp(n,u),nearest=roundNearest(n,u);
+if(question.rule==="nearest"){
+if(v===down)return valueText+"は、切り捨てたときの答えだよ。四捨五入では、"+place+"のすぐ右の数字が5以上なら切り上げるよ。";
+if(v===up)return valueText+"は、切り上げたときの答えだよ。四捨五入では、"+place+"のすぐ右の数字が4以下なら切り捨てるよ。";
+}else if(question.rule==="up"){
+if(v===down)return valueText+"は、切り捨てたときの答えだよ。切り上げでは、"+place+"より右に0でない数字があれば、"+place+"を1つ大きくするよ。";
+if(v===nearest)return valueText+"は、四捨五入したときの答えだよ。切り上げでは、右の数字が小さくても、"+place+"を1つ大きくするよ。";
+}else if(question.rule==="down"){
+if(v===up)return valueText+"は、切り上げたときの答えだよ。切り捨てでは、"+place+"より右の数字をすべて0にするよ。";
+if(v===nearest)return valueText+"は、四捨五入したときの答えだよ。切り捨てでは、右の数字が大きくても、すべて0にするよ。";
+}else if(question.digits){
+if(v===down)return valueText+"は、切り捨てたときの答えだよ。概数では、残す位のすぐ右の数字で四捨五入するよ。";
+if(v===up)return valueText+"は、切り上げたときの答えだよ。概数では、残す位のすぐ右の数字で四捨五入するよ。";
+}
+if(v===a-u||v===a+u)return valueText+"は答えに近い数だよ。"+place+"と、そのすぐ右の数字をもう一度見てみよう。";
+return null;
+}
+const METHOD_USES={nearest:"およその大きさを表したい",up:"足りなくならないよう、多めに見積もりたい",down:"実際より多くならないよう、少なめに見積もりたい",oneSig:"大きな数の規模を、大まかに比べたい",twoSig:"大きな数を、少し細かく比べたい"};
+export function diagnoseMethodChoice(question,value){
+if(value===question.answer)return null;
+const chosen=METHOD_CHOICES.find(item=>item.value===value);
+if(!chosen||!METHOD_USES[value])return null;
+return "えらんだ「"+chosen.label+"」は、"+METHOD_USES[value]+"ときに使う方法だよ。この場面に合う方法を、もう一度考えてみよう。";
+}

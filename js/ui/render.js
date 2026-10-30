@@ -80,12 +80,13 @@ export function renderFeedback(element,engine){
 if(!element||!engine.session||!engine.session.answerState)return;
 const question=engine.getCurrentQuestion(),state=engine.session.answerState,correct=state.isCorrect;
 const hint=engine.session.hintVisible?'<div class="hint-box"><strong>ヒント</strong><p>'+esc(question.hint)+'</p></div>':"";
+const diagnosis=state.diagnosis?'<div class="diagnosis-box"><strong>えらんだ答えをチェック</strong><p>'+esc(state.diagnosis)+'</p></div>':"";
 const revealed=state.revealed?'<p><strong>答え：</strong>'+esc(state.answerLabel)+'</p>':"";
 const bonus=state.bonusCoins?'<div class="edu-reward"><span class="edu-reward-icon">🧰</span><strong>10問ごとの宝箱ボーナス！ +'+state.bonusCoins+'コイン</strong></div>':"";
 const actions=correct?'<button class="primary-action" data-action="quiz-next">次の問題へ →</button>':
 '<button class="small-action" data-action="show-hint">ヒントを見る</button><button class="small-action" data-action="reveal-answer">答えと考え方を見る</button><button class="primary-action" data-action="quiz-next">次へ進む →</button>';
 element.innerHTML='<div class="feedback-box '+(correct?"is-correct effect-correct-pop":"is-wrong effect-wrong-shake")+'" aria-live="polite">'+
-'<h3>'+(correct?"正解！その調子！":"おしい！ここから分かるよ。")+'</h3><p>'+esc(question.explanation)+'</p>'+bonus+revealed+hint+
+'<h3>'+(correct?"正解！その調子！":"おしい！ここから分かるよ。")+'</h3>'+diagnosis+'<p>'+esc(question.explanation)+'</p>'+bonus+revealed+hint+
 '<div class="feedback-actions">'+actions+'</div></div>';
 }
 export function renderResult(element,engine){

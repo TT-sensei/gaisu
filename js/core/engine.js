@@ -1,6 +1,6 @@
 import {EDU_EVENTS,QuestionPool,AnswerChecker,ScoreManager,ComboManager,StorageManager,ProgressManager,UnlockManager,AchievementManager,BadgeManager} from "https://tt-sensei.github.io/edu-components/index.js";
 import {MAIN_AREAS,MARKET_AREA,AREAS} from "../../data/areas.js";
-import {QUESTION_BANKS,ALL_QUESTIONS} from "../../data/questions.js";
+import {QUESTION_BANKS,ALL_QUESTIONS,diagnoseNumericChoice,diagnoseMethodChoice} from "../../data/questions.js";
 import {BADGES} from "../../data/badges.js";
 import {SHOPPING_MISSIONS,getMissionTotals} from "../../data/shopping.js";
 
@@ -119,7 +119,7 @@ stats.total++;if(correct)stats.correct++;this.profile.topicStats[topic]=stats;
 if(this.profile.totalAnswers>=10)this.award("ten-answers");
 if(this.profile.totalAnswers>=100)this.award("hundred-answers");
 if(this.profile.coins>=100)this.award("coin-hunter");
-this.session.answerState={isCorrect:correct,value,revealed:false,bonusCoins,answerLabel:question.answerLabel||String(question.answer)};
+this.session.answerState={isCorrect:correct,value,revealed:false,bonusCoins,answerLabel:question.answerLabel||String(question.answer),diagnosis:correct?null:question.type==="number"?diagnoseNumericChoice(question,value):question.type==="method"?diagnoseMethodChoice(question,value):null};
 this.saveProfile();return this.session.answerState;
 }
 showHint(){if(!this.session||!this.session.answerState)return false;this.session.hintVisible=true;return true;}

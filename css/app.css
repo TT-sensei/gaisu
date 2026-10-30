@@ -52,6 +52,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #d49c43;outline-offset:3p
 .quiz-aside{display:grid;gap:10px}.aside-stat{padding:13px;border:1px solid var(--edu-line);border-radius:16px;background:#fff}
 .aside-stat span{display:block;color:var(--edu-muted);font-size:.73rem;font-weight:800}.aside-stat strong{display:block;margin-top:2px;color:#2e664c;font-size:1.5rem;font-variant-numeric:tabular-nums}
 .tip-card p{font-size:.82rem}.hint-box{margin-top:12px;padding:12px 14px;border:1px solid #e9d49f;border-radius:14px;color:#66502c;background:#fff9e9}
+.diagnosis-box{margin:10px 0;padding:12px 14px;border:1px solid #b9d2e4;border-radius:14px;color:#33506b;background:#f2f8fd}.diagnosis-box p{margin:4px 0 0;color:#33506b}
 .feedback-box{margin-top:16px;padding:14px 16px;border:1px solid #dce6dc;border-radius:17px;background:#f8fbf6}
 .feedback-box.is-correct{border-color:#b9d9c0;background:#f0f8f0}.feedback-box.is-wrong{border-color:#eed5cc;background:#fff8f4}
 .feedback-box h3{margin:0 0 4px;font-size:1.08rem}.feedback-box p{margin:5px 0;color:#556a5b}.feedback-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
