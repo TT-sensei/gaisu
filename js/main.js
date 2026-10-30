@@ -1,5 +1,6 @@
 import {GameEngine} from "./core/engine.js";
 import {playSfx} from "./core/audio.js";
+import {showAreaIntro,showComboEffect,showBadgeReward} from "./ui/effects.js";
 import {renderHome,renderMap,renderQuiz,renderFeedback,renderResult,renderMarket,renderMarketDone,renderBadges,renderStats} from "./ui/render.js";
 const screens=[...document.querySelectorAll("[data-screen]")],engine=new GameEngine();
 let toastTimer=null;
@@ -30,7 +31,7 @@ if(mode==="cave")toast("今のところ、まちがい直しはないよ。");
 else if(mode==="volcano")toast("4つのエリアをクリアすると挑戦できるよ。");
 else toast("この問題は準備中だよ。");return;
 }
-showQuiz();playSfx("start",engine.getSoundEnabled());
+showQuiz();showAreaIntro(document.querySelector("#screen-quiz .quiz-meta span")?.textContent||engine.session?.modeName);playSfx("start",engine.getSoundEnabled());
 }
 document.addEventListener("click",event=>{
 const button=event.target.closest("button[data-action]");if(!button||button.disabled)return;
@@ -59,7 +60,7 @@ if(action==="show-hint"){engine.showHint();renderFeedback(document.querySelector
 if(action==="reveal-answer"){engine.revealAnswer();renderFeedback(document.querySelector("#feedback-area"),engine);playSfx("answer",engine.getSoundEnabled());return;}
 if(action==="quiz-next"){
 const ended=engine.advanceQuestion();
-if(ended){showResults();playSfx("practice",engine.getSoundEnabled());}else showQuiz();
+if(ended){showResults();const summary=engine.session?.summary;playSfx(summary?.firstClear?"clear":"practice",engine.getSoundEnabled());}else showQuiz();
 updateHeader();return;
 }
 if(action==="start-market"){if(engine.startMarket())showMarket();else toast("4つのエリアをクリアすると、市場がひらくよ。");return;}
@@ -87,8 +88,11 @@ if(card){card.classList.remove("effect-wrong-shake");void card.offsetWidth;card.
 playSfx("softFail",engine.getSoundEnabled());
 });
 document.addEventListener("edu:badge",event=>{
-const badge=event.detail?.badge;if(badge?.name)toast("バッジ獲得！「"+badge.name+"」");
+showBadgeReward(event.detail?.badge);
 playSfx("badge",engine.getSoundEnabled());
+});
+document.addEventListener("edu:combo",event=>{
+showComboEffect(event.detail?.current);
 });
 document.addEventListener("edu:unlock",event=>{
 if(event.detail?.id)toast("新しいエリアがひらいたよ！");

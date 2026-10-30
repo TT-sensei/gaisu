@@ -28,6 +28,7 @@
     index.html
     css/theme.css
     css/app.css
+    css/effects.css
     data/areas.js
     data/questions.js
     data/shopping.js
@@ -37,6 +38,7 @@
     js/core/engine.js
     js/core/audio.js
     js/ui/render.js
+    js/ui/effects.js
     js/main.js
     scripts/verify.mjs
     AGENTS.md

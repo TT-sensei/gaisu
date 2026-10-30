@@ -31,10 +31,14 @@ button("冒険をつづける　→","continue",true)+
 '<button class="side-link" data-action="open-badges"><span>🏅</span><span>バッジ図鑑</span></button></div></section></div>';
 }
 export function renderMap(element,engine){
+const lastSummary=engine.session?.summary;
+const justClearedId=lastSummary?.mode==="quest"&&lastSummary.firstClear?lastSummary.areaId:null;
+const clearedIndex=MAIN_AREAS.findIndex(area=>area.id===justClearedId);
+const justUnlockedId=clearedIndex>=0?(MAIN_AREAS[clearedIndex+1]?.id||(clearedIndex===MAIN_AREAS.length-1?MARKET_AREA.id:null)):null;
 const cards=AREAS.map(area=>{
 const status=engine.getAreaStatus(area.id),market=area.id==="market",disabled=!status.unlocked;
 const label=status.completed?"クリア！":disabled?"まだ進めない":market?"最終ミッション":"挑戦できる";
-return '<button type="button" class="route-card '+(disabled?"is-locked ":"")+(status.completed?"is-complete":"")+'" style="'+sceneStyle(area.background)+'" data-action="'+(market?"start-market":"start-quest")+'" data-area="'+area.id+'" '+(disabled?"disabled":"")+'>'+
+return '<button type="button" class="route-card '+(disabled?"is-locked ":"")+(status.completed?"is-complete":"")+(area.id===justClearedId?" is-just-cleared":"")+(area.id===justUnlockedId?" is-newly-unlocked":"")+'" style="'+sceneStyle(area.background)+'" data-action="'+(market?"start-market":"start-quest")+'" data-area="'+area.id+'" '+(disabled?"disabled":"")+'>'+
 '<span><span class="route-number">AREA '+area.number+'</span><strong>'+esc(area.name)+'</strong><small>'+esc(area.subtitle)+'</small></span><span class="route-status">'+label+'</span></button>';
 }).join("");
 const trips=SIDE_TRIPS.map(trip=>{
@@ -63,7 +67,7 @@ const selected=answered&&String(session.answerState.value)===String(choice.value
 return '<button type="button" class="answer-choice edu-btn edu-btn-secondary '+(selected?"is-selected":"")+'" data-action="answer" data-answer="'+encodeURIComponent(String(choice.value))+'" '+(answered?"disabled":"")+'><span class="choice-index">'+(index+1)+'</span>'+esc(choice.label)+'</button>';
 }).join("");
 element.innerHTML=
-'<div class="quiz-topline"><button class="quiet-action" data-action="open-map">← 地図へ</button><div class="quiz-meta"><span>'+esc(title)+'</span><span>'+number+' / '+total+'問</span></div></div>'+
+'<div class="quiz-scene" style="'+sceneStyle(area?.background||"training-ground")+'"><div class="quiz-topline"><button class="quiet-action" data-action="open-map">← 地図へ</button><div class="quiz-meta"><span>'+esc(title)+'</span><span>'+number+' / '+total+'問</span></div></div>'+
 '<div class="progress-track" aria-label="問題の進みぐあい"><span style="width:'+(number/total*100)+'%"></span></div>'+
 '<div class="quiz-grid"><section class="question-card edu-question" id="question-card">'+
 '<div class="edu-question-head"><span class="edu-question-number"><strong>'+number+'</strong> QUESTION</span><span class="edu-badge edu-badge-primary">'+esc(question.topic)+'</span></div>'+
@@ -73,7 +77,7 @@ element.innerHTML=
 '<div class="aside-stat"><span>連続正解</span><strong>'+combo+' <small>COMBO</small></strong></div>'+
 '<div class="aside-stat"><span>今回の得点</span><strong>'+score.score+'</strong></div>'+
 '<div class="aside-stat"><span>コイン</span><strong>🪙 '+engine.getProfile().coins+'</strong></div>'+
-'<div class="info-card tip-card"><strong>考え方のヒント</strong><p>残す位と、その右の数字に注目しよう。何のために概数にするかも大切だよ。</p></div></aside></div>';
+'<div class="info-card tip-card"><strong>考え方のヒント</strong><p>残す位と、その右の数字に注目しよう。何のために概数にするかも大切だよ。</p></div></aside></div></div>';
 renderFeedback(element.querySelector("#feedback-area"),engine);
 }
 export function renderFeedback(element,engine){
@@ -96,8 +100,8 @@ const sub=summary.firstClear?"このエリアをクリア！次の道がひら�
 const nextText=summary.wrong>0?"まちがえた問題 "+summary.wrong+"問は、迷いの洞窟に記録したよ。次のクエストにも少しずつ登場するよ。":"今回はまちがいがなかったよ。まちがえた問題が出たら、迷いの洞窟で見直していこう。";
 const art=summary.firstClear||summary.mode==="volcano"?GROUP_IMAGES.celebration:GROUP_IMAGES.adventure;
 const next=engine.getNextArea();
-element.innerHTML='<section class="result-hero" style="'+sceneStyle(summary.firstClear?COMPLETION_BACKGROUND:"training-ground")+'">'+
-'<div class="result-main"><div><p class="eyebrow">QUEST RESULT</p><h1>'+heading+'</h1><p>'+sub+'</p></div><img class="result-art" src="'+art+'" alt="" loading="lazy"></div></section>'+
+element.innerHTML='<section class="result-hero '+(summary.firstClear?"quest-result-clear":"")+'" style="'+sceneStyle(summary.firstClear?COMPLETION_BACKGROUND:"training-ground")+'">'+
+'<div class="result-main"><div>'+(summary.firstClear?'<span class="quest-clear-chip">✓ AREA CLEAR</span>':"")+'<p class="eyebrow">QUEST RESULT</p><h1>'+heading+'</h1><p>'+sub+'</p></div><img class="result-art" src="'+art+'" alt="" loading="lazy"></div></section>'+
 '<div class="result-stats"><div class="result-stat"><span>正解</span><strong>'+summary.correct+' / '+summary.total+'</strong></div>'+
 '<div class="result-stat"><span>正答率</span><strong>'+summary.accuracy+'%</strong></div><div class="result-stat"><span>最高コンボ</span><strong>'+summary.maxCombo+'</strong></div>'+
 '<div class="result-stat"><span>今回のコイン</span><strong>🪙 '+summary.coinsEarned+'</strong></div></div>'+
