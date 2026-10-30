@@ -7,7 +7,7 @@ import {SHOPPING_MISSIONS,getMissionTotals} from "../../data/shopping.js";
 const MODE_NAMES={quest:"エリアクエスト",cave:"まちがい直し",training:"特訓の広場",inn:"旅人の宿",volcano:"火山の試練"};
 function shuffle(items){const list=[...items];for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}return list;}
 function takeRandom(items,count){return new QuestionPool(items).take(count);}
-function defaultProfile(){return {version:1,coins:0,totalAnswers:0,totalCorrect:0,sessions:0,mistakesFixed:0,weakIds:[],topicStats:{},sound:true,marketCompleted:false};}
+function defaultProfile(){return {version:1,coins:0,totalAnswers:0,totalCorrect:0,questAnswersCount:0,sessions:0,mistakesFixed:0,weakIds:[],topicStats:{},sound:true,marketCompleted:false};}
 
 export class GameEngine{
 constructor(){
@@ -15,6 +15,7 @@ this.storage=new StorageManager("gaisu-quest-v1",{eventTarget:document});
 this.profile={...defaultProfile(),...this.storage.load("profile",{})};
 if(!Array.isArray(this.profile.weakIds))this.profile.weakIds=[];
 if(!this.profile.topicStats||typeof this.profile.topicStats!=="object")this.profile.topicStats={};
+if(!Number.isFinite(this.profile.questAnswersCount))this.profile.questAnswersCount=0;
 this.progress=new ProgressManager({storage:this.storage,storageKey:"area-progress",ids:AREAS.map(area=>area.id),eventTarget:document});
 this.unlocks=new UnlockManager({storage:this.storage,storageKey:"area-unlocks",initialUnlocked:["forest"],eventTarget:document});
 this.achievements=new AchievementManager({storage:this.storage,storageKey:"achievements",achievements:BADGES.map(badge=>({id:badge.id,name:badge.name,description:badge.description})),eventTarget:document});
@@ -90,6 +91,7 @@ getCurrentQuestion(){if(!this.session||this.session.completed)return null;return
 submitAnswer(value){
 if(!this.session||this.session.completed||this.session.answerState)return null;
 const question=this.getCurrentQuestion();if(!question)return null;
+let bonusCoins=0;
 const correct=this.session.checker.check(value,question.answer,{numeric:question.type==="number",detail:{question:question.id,type:question.type,areaId:question.areaId}});
 if(correct){
 this.session.correctCount++;this.session.score.correct(10);
@@ -108,12 +110,16 @@ this.session.wrongCount++;this.session.score.wrong();this.session.combo.wrong();
 if(!this.profile.weakIds.includes(question.id))this.profile.weakIds.push(question.id);
 }
 this.profile.totalAnswers++;
+if(this.session.mode==="quest"){
+this.profile.questAnswersCount++;
+if(this.profile.questAnswersCount%10===0){bonusCoins=5;this.profile.coins+=bonusCoins;this.session.coinsEarned+=bonusCoins;}
+}
 const topic=question.topic||"概数",stats=this.profile.topicStats[topic]||{total:0,correct:0};
 stats.total++;if(correct)stats.correct++;this.profile.topicStats[topic]=stats;
 if(this.profile.totalAnswers>=10)this.award("ten-answers");
 if(this.profile.totalAnswers>=100)this.award("hundred-answers");
 if(this.profile.coins>=100)this.award("coin-hunter");
-this.session.answerState={isCorrect:correct,value,revealed:false,answerLabel:question.answerLabel||String(question.answer)};
+this.session.answerState={isCorrect:correct,value,revealed:false,bonusCoins,answerLabel:question.answerLabel||String(question.answer)};
 this.saveProfile();return this.session.answerState;
 }
 showHint(){if(!this.session||!this.session.answerState)return false;this.session.hintVisible=true;return true;}
