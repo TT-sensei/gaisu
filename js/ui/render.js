@@ -57,9 +57,11 @@ const area=AREAS.find(item=>item.id===session.areaId),title=session.mode==="ques
 const visual=question.type==="number"?
 '<div class="question-visual"><div><small>もとの数</small><strong>'+formatNumber(question.number)+'</strong></div></div>':
 '<div class="question-visual"><div><small>考えるポイント</small><strong>目的に合う方法は？</strong></div></div>';
-const choices=question.choices.map((choice,index)=>
-'<button type="button" class="answer-choice edu-btn edu-btn-secondary" data-action="answer" data-answer="'+encodeURIComponent(String(choice.value))+'"><span class="choice-index">'+(index+1)+'</span>'+esc(choice.label)+'</button>'
-).join("");
+const answered=Boolean(session.answerState);
+const choices=question.choices.map((choice,index)=>{
+const selected=answered&&String(session.answerState.value)===String(choice.value);
+return '<button type="button" class="answer-choice edu-btn edu-btn-secondary '+(selected?"is-selected":"")+'" data-action="answer" data-answer="'+encodeURIComponent(String(choice.value))+'" '+(answered?"disabled":"")+'><span class="choice-index">'+(index+1)+'</span>'+esc(choice.label)+'</button>';
+}).join("");
 element.innerHTML=
 '<div class="quiz-topline"><button class="quiet-action" data-action="open-map">← 地図へ</button><div class="quiz-meta"><span>'+esc(title)+'</span><span>'+number+' / '+total+'問</span></div></div>'+
 '<div class="progress-track" aria-label="問題の進みぐあい"><span style="width:'+(number/total*100)+'%"></span></div>'+
@@ -79,10 +81,11 @@ if(!element||!engine.session||!engine.session.answerState)return;
 const question=engine.getCurrentQuestion(),state=engine.session.answerState,correct=state.isCorrect;
 const hint=engine.session.hintVisible?'<div class="hint-box"><strong>ヒント</strong><p>'+esc(question.hint)+'</p></div>':"";
 const revealed=state.revealed?'<p><strong>答え：</strong>'+esc(state.answerLabel)+'</p>':"";
+const bonus=state.bonusCoins?'<div class="edu-reward"><span class="edu-reward-icon">🧰</span><strong>10問ごとの宝箱ボーナス！ +'+state.bonusCoins+'コイン</strong></div>':"";
 const actions=correct?'<button class="primary-action" data-action="quiz-next">次の問題へ →</button>':
 '<button class="small-action" data-action="show-hint">ヒントを見る</button><button class="small-action" data-action="reveal-answer">答えと考え方を見る</button><button class="primary-action" data-action="quiz-next">次へ進む →</button>';
 element.innerHTML='<div class="feedback-box '+(correct?"is-correct effect-correct-pop":"is-wrong effect-wrong-shake")+'" aria-live="polite">'+
-'<h3>'+(correct?"正解！その調子！":"おしい！ここから分かるよ。")+'</h3><p>'+esc(question.explanation)+'</p>'+revealed+hint+
+'<h3>'+(correct?"正解！その調子！":"おしい！ここから分かるよ。")+'</h3><p>'+esc(question.explanation)+'</p>'+bonus+revealed+hint+
 '<div class="feedback-actions">'+actions+'</div></div>';
 }
 export function renderResult(element,engine){
