@@ -21,22 +21,23 @@ function createNumericQuestion(data){
 const unit=data.digits?significantUnit(data.number,data.digits):data.unit;
 let answer;if(data.rule==="nearest")answer=roundNearest(data.number,unit);else if(data.rule==="up")answer=roundUp(data.number,unit);else if(data.rule==="down")answer=roundDown(data.number,unit);else answer=roundSignificant(data.number,data.digits||1);
 let instruction="",hint="",explanation="";
+const rest=data.number%unit,decidingDigit=unit>1?Math.floor(data.number/(unit/10))%10:null,answerText=formatNumber(answer);
 if(data.rule==="nearest"){
 instruction=placeLabel(unit)+"まで四捨五入";
 hint="残す位のすぐ右の数字を見よう。0〜4ならそのまま、5〜9なら1大きくするよ。";
-explanation="四捨五入では、残す位のすぐ右の数字を見ます。0〜4は切り捨て、5〜9は切り上げます。";
+explanation=rest===0?formatNumber(data.number)+"は、ちょうど"+placeLabel(unit)+"までの数だよ。そのまま "+answerText+" だね。":placeLabel(unit)+"のすぐ右の数字は "+decidingDigit+"。"+(decidingDigit>=5?"5以上だから切り上げて、":"4以下だから切り捨てて、")+answerText+" になるよ。";
 }else if(data.rule==="up"){
 instruction=placeLabel(unit)+"まで切り上げ";
 hint="残す位より右に0でない数字があれば、残す位を1大きくするよ。";
-explanation="切り上げは、残す位より右にある数をまとめて、残す位を1大きくします。";
+explanation=rest===0?formatNumber(data.number)+"は、ちょうど"+placeLabel(unit)+"までの数だよ。切り上げても "+answerText+" のままだね。":placeLabel(unit)+"より右に0でない数字があるから、"+placeLabel(unit)+"を1つ大きくして "+answerText+" になるよ。";
 }else if(data.rule==="down"){
 instruction=placeLabel(unit)+"まで切り捨て";
 hint="残す位より右の数字を、まとめて0にしてみよう。";
-explanation="切り捨ては、残す位より右の数字をすべて0にします。";
+explanation=rest===0?formatNumber(data.number)+"は、ちょうど"+placeLabel(unit)+"までの数だよ。切り捨てても "+answerText+" のままだね。":placeLabel(unit)+"より右の数字をすべて0にして、"+answerText+" になるよ。";
 }else{
 instruction="上から"+data.digits+"けたの概数";
 hint="左から"+data.digits+"けたを残して、そのすぐ右の数字を見よう。";
-explanation="上から"+data.digits+"けたを残し、そのすぐ右の数字で四捨五入します。";
+explanation=(unit===1||rest===0)?"上から"+data.digits+"けたを残すと、"+answerText+" になるよ。":"上から"+data.digits+"けたを残すよ。残す位（"+placeLabel(unit)+"）のすぐ右の数字は "+decidingDigit+"。"+(decidingDigit>=5?"5以上だから切り上げて、":"4以下だから切り捨てて、")+answerText+" になるよ。";
 }
 return {id:data.id,areaId:data.areaId,type:"number",topic:data.topic,prompt:data.prompt||(formatNumber(data.number)+"を、"+instruction+"で表しましょう。"),number:data.number,unit,answer,choices:numberChoices(data.number,unit,answer),hint,explanation,answerLabel:formatNumber(answer)};
 }
