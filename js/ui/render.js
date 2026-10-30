@@ -91,7 +91,8 @@ element.innerHTML='<div class="feedback-box '+(correct?"is-correct effect-correc
 export function renderResult(element,engine){
 const summary=engine.session?.summary;if(!summary)return;
 const heading=summary.mode==="quest"?"エリアクエスト終了！":summary.modeName+" おつかれさま！";
-const sub=summary.firstClear?"このエリアをクリア！次の道がひらいたよ。":(summary.mode==="quest"?"もう一度挑戦して、正解を増やしていこう。":"取り組んだ問題は、記録に残っているよ。");
+const sub=summary.firstClear?"このエリアをクリア！次の道がひらいたよ。":summary.accuracy===100?"全問正解！すばらしい出来だよ。":(summary.mode==="quest"?"もう一度挑戦して、正解を増やしていこう。":"取り組んだ問題は、記録に残っているよ。");
+const nextText=summary.wrong>0?"まちがえた問題 "+summary.wrong+"問は、迷いの洞窟に記録したよ。次のクエストにも少しずつ登場するよ。":"今回はまちがいがなかったよ。まちがえた問題が出たら、迷いの洞窟で見直していこう。";
 const art=summary.firstClear||summary.mode==="volcano"?GROUP_IMAGES.celebration:GROUP_IMAGES.adventure;
 const next=engine.getNextArea();
 element.innerHTML='<section class="result-hero" style="'+sceneStyle(summary.firstClear?COMPLETION_BACKGROUND:"training-ground")+'">'+
@@ -99,7 +100,7 @@ element.innerHTML='<section class="result-hero" style="'+sceneStyle(summary.firs
 '<div class="result-stats"><div class="result-stat"><span>正解</span><strong>'+summary.correct+' / '+summary.total+'</strong></div>'+
 '<div class="result-stat"><span>正答率</span><strong>'+summary.accuracy+'%</strong></div><div class="result-stat"><span>最高コンボ</span><strong>'+summary.maxCombo+'</strong></div>'+
 '<div class="result-stat"><span>今回のコイン</span><strong>🪙 '+summary.coinsEarned+'</strong></div></div>'+
-'<section class="info-card"><h2>次にできること</h2><p>まちがえた問題 '+summary.weakCount+'問は、迷いの洞窟に記録したよ。次のクエストにも少しずつ登場するよ。</p>'+
+'<section class="info-card"><h2>次にできること</h2><p>'+nextText+'</p>'+
 '<div class="result-actions"><button class="primary-action" data-action="open-map">地図へもどる →</button>'+
 '<button class="secondary-action" data-action="start-side" data-mode="cave" '+(summary.weakCount===0?"disabled":"")+'>まちがい直し</button>'+
 '<button class="secondary-action" data-action="go-home">ホーム</button></div><p class="is-visually-muted">次の目的地：'+esc(next.name)+'</p></section>';
@@ -160,7 +161,7 @@ const badges=engine.getBadgeData(),earned=badges.filter(badge=>badge.earned).len
 const cards=badges.map(badge=>{
 const image=badge.image?'<img src="'+esc(badge.image)+'" alt="" loading="lazy">':esc(badge.earned?badge.icon:"？");
 return '<article class="badge-card '+(badge.earned?"is-earned":"is-locked")+'"><div class="badge-medal">'+image+'</div>'+
-'<strong>'+esc(badge.earned?badge.name:"？？？")+'</strong><small>'+esc(badge.earned?badge.description:"学習を続けると手に入るよ。")+'</small></article>';
+'<strong>'+esc(badge.earned?badge.name:"？？？")+'</strong><small>'+esc(badge.description)+'</small></article>';
 }).join("");
 element.innerHTML='<div class="page-heading"><div><p class="eyebrow">BADGE COLLECTION</p><h1>バッジ図鑑</h1><p class="lead">学んだこと、挑戦したことが形になって残るよ。</p></div><button class="quiet-action" data-action="go-home">⌂ ホーム</button></div>'+
 '<section class="info-card"><div class="edu-row-between"><strong>集めたバッジ</strong><span>'+earned+' / '+badges.length+'</span></div><div class="progress-track"><span style="width:'+(earned/badges.length*100)+'%"></span></div></section><div class="badges-grid">'+cards+'</div>';
