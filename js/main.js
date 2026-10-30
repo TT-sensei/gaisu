@@ -5,7 +5,7 @@ const screens=[...document.querySelectorAll("[data-screen]")],engine=new GameEng
 let toastTimer=null;
 function showScreen(name){
 screens.forEach(screen=>{screen.hidden=screen.id!=="screen-"+name;});
-window.scrollTo({top:0,behavior:"instant"});updateHeader();
+window.scrollTo(0,0);updateHeader();
 }
 function updateHeader(){
 document.querySelector("#header-coins").textContent=String(engine.getProfile().coins);
@@ -50,9 +50,9 @@ if(action==="start-side"){startSession(button.dataset.mode);return;}
 if(action==="answer"){
 const value=decodeURIComponent(button.dataset.answer||""),result=engine.submitAnswer(value);
 if(result){
-button.classList.add("is-selected");
-document.querySelectorAll("#quiz-content [data-action='answer']").forEach(choice=>{choice.disabled=true;});
-renderFeedback(document.querySelector("#feedback-area"),engine);updateHeader();
+renderQuiz(document.querySelector("#quiz-content"),engine);
+updateHeader();
+if(result.bonusCoins)playSfx("chest",engine.getSoundEnabled());
 }return;
 }
 if(action==="show-hint"){engine.showHint();renderFeedback(document.querySelector("#feedback-area"),engine);playSfx("hint",engine.getSoundEnabled());return;}
