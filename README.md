@@ -70,4 +70,6 @@ GitHub Pagesを使う場合は、リポジトリのSettings → Pagesで、Deplo
 
 参照する共通基盤・素材には、それぞれのリポジトリに定められた利用条件が別途適用されます。現在確認できる範囲では、edu-components / edu-effects / sounds-recipe- はPolyForm Noncommercial、navi-character- / edu-assetsの画像はCC BY-NC 4.0です。この構成での利用は非営利の教育利用を前提とします。将来、商用利用する場合は、各権利者から別途許諾を得るか、利用条件を確認したうえで差し替えてください。
 
+素材の出典・帰属表示は [CREDITS.md](./CREDITS.md) を参照してください。
+
 Copyright © 2026 TT-sensei.
